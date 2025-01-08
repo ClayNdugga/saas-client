@@ -38,7 +38,7 @@ export function NavUser() {
   }
 
   // console.log("Nav component...");
-  // console.log(user);
+  // console.log(user); 
 
   return (
     <SidebarMenu>
@@ -105,7 +105,7 @@ export function NavUser() {
               </>
             )}
             <DropdownMenuGroup>
-              <DropdownMenuItem>
+              <DropdownMenuItem onClick={() => console.log(user)}>
                 <BadgeCheck />
                 Account
               </DropdownMenuItem>

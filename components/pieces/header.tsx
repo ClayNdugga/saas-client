@@ -93,7 +93,7 @@ const Header = () => {
                     variant: "ghost",
                   })
                 )}
-                href="#"
+                href="/"
               >
                 Home
               </a>

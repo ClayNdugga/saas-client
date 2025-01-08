@@ -48,10 +48,10 @@ const Pricing4 = () => {
   }
 
   return (
-    <>
+    <div className="flex flex-col">
       <Header />
-      <section className="py-32">
-        <div className="container flex justify-center">
+      <section className="flex py-32 justify-center">
+        <div className="container place-items-center">
           <div className="flex max-w-5xl flex-col gap-6">
             <h2 className="text-center text-pretty text-4xl font-bold lg:text-6xl">Pricing</h2>
             <div className="flex flex-col items-center justify-between gap-10 md:flex-row">
@@ -176,7 +176,7 @@ const Pricing4 = () => {
           </div>
         </div>
       </section>
-    </>
+    </div>
   );
 };
 
