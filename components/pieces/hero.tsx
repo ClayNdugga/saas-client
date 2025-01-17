@@ -34,6 +34,7 @@ export default function Hero() {
               objectFit="cover"
               priority
               className="transition-transform duration-300 ease-in-out hover:scale-105"
+              quality={65}
             />
           </div>
         </div>

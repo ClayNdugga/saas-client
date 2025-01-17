@@ -18,7 +18,8 @@ import { useAuthState, useSignOut } from "react-firebase-hooks/auth";
 import { auth } from "@/firebase/config";
 import { useRouter } from "next/navigation";
 // import { signOut } from "firebase/auth";
-import { FirebaseUser } from "@/app/models/firebase";
+import { FirebaseUser } from "@/models/firebase";
+import { useDashboard } from "@/contexts/DashboardContext";
 
 interface NavUserProps {
   user: FirebaseUser;
@@ -28,17 +29,19 @@ export function NavUser() {
   const { isMobile } = useSidebar();
   const router = useRouter();
 
-  const [user, loadingUser] = useAuthState(auth);
+  // const [user, loadingUser] = useAuthState(auth);
 
-  const [signOut] = useSignOut(auth);
+  const {user, loadingUser} = useDashboard()
+
+  // const [signOut] = useSignOut(auth);
 
   function handleLogOut() {
-    signOut();
+    // signOut();
     router.push("/");
   }
 
   // console.log("Nav component...");
-  // console.log(user); 
+  // console.log(user);
 
   return (
     <SidebarMenu>
@@ -52,16 +55,16 @@ export function NavUser() {
               <Avatar className="h-8 w-8 rounded-lg">
                 <AvatarImage
                   src="https://github.com/shadcn.png"
-                  alt={loadingUser ? "Loading..." : user?.email || "User"}
+                  alt={loadingUser ? "Loading..." : user?.data?.userData.email || "User"}
                 />
                 <AvatarFallback className="rounded-lg">CN</AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
                 <span className="truncate font-semibold">
-                  {loadingUser ? "Loading..." : user?.providerData[0]?.displayName || "Guest"}
+                  {loadingUser ? "Loading..." : user?.data?.userData.displayName || "Guest"}
                 </span>
                 <span className="truncate text-xs">
-                  {loadingUser ? "Please wait..." : user?.email || "No email available"}
+                  {loadingUser ? "Please wait..." : user?.data?.userData.email || "No email available"}
                 </span>
               </div>
               <ChevronsUpDown className="ml-auto size-4" />
@@ -78,16 +81,16 @@ export function NavUser() {
                 <Avatar className="h-8 w-8 rounded-lg">
                   <AvatarImage
                     src="https://github.com/shadcn.png"
-                    alt={loadingUser ? "Loading..." : user?.email || "User"}
+                    alt={loadingUser ? "Loading..." : user?.data?.userData.email|| "User"}
                   />
                   <AvatarFallback className="rounded-lg">CN</AvatarFallback>
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
                   <span className="truncate font-semibold">
-                    {loadingUser ? "Loading..." : user?.providerData[0]?.displayName || "Guest"}
+                    {loadingUser ? "Loading..." : user?.data?.userData.displayName || "Guest"}
                   </span>
                   <span className="truncate text-xs">
-                    {loadingUser ? "Please wait..." : user?.email || "No email available"}
+                    {loadingUser ? "Please wait..." : user?.data?.userData.email|| "No email available"}
                   </span>
                 </div>
               </div>

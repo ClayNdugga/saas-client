@@ -7,7 +7,8 @@ export default function Home() {
     <div className="flex h-screen">
       {/* Left half - Image */}
       <div className="w-1/2 relative">
-        <Image src="/login.jpg" alt="Login Background" fill className="object-cover" priority />
+        <Image src="/login.jpg" alt="Login Background" fill className="object-cover"               quality={65}
+ priority />
       </div>
 
       {/* Right half - Login component and Sign up link */}

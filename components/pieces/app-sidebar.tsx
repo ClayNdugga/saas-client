@@ -22,7 +22,7 @@ import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarRail } fr
 
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "@/firebase/config";
-import { FirebaseUser } from "@/app/models/firebase";
+import { FirebaseUser } from "@/models/firebase";
 
 // This is sample data.
 const data = {
@@ -48,6 +48,7 @@ const data = {
       plan: "Free",
     },
   ],
+
   navMain: [
     {
       title: "Playground",
@@ -92,7 +93,6 @@ const data = {
 };
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>

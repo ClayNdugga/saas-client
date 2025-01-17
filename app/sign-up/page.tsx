@@ -21,9 +21,8 @@ export default function Home() {
       </div>
       {/* Left half - Image */}
       <div className="w-1/2 relative">
-        <Image src="/sign-up.jpg" alt="Signup background" fill className="object-cover" priority />
+        <Image src="/sign-up.jpg" quality={65} alt="Signup background" fill className="object-cover" priority />
       </div>
-
     </div>
   );
 }

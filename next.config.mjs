@@ -18,9 +18,22 @@ const nextConfig = {
         source: "/api/upload",
         destination: "http://localhost:5000/upload",
       },
+      //begin new 
       {
-        source: "/api/file/:path*",  
-        destination: "http://localhost:5000/file/:path*",  
+        source: "/api/files/:path*",  
+        destination: "http://localhost:5000/files/:path*",  
+      },
+      {
+        source: "/api/users/:path*",  
+        destination: "http://localhost:5000/users/:path*",  
+      },
+      {
+        source: "/api/chats/:path*",  
+        destination: "http://localhost:5000/chats/:path*",  
+      },
+      {
+        source: "/api/auth/:path*",  
+        destination: "http://localhost:5000/auth/:path*",  
       },
     ];
   },
