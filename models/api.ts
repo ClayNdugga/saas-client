@@ -5,3 +5,9 @@ export interface ApiResponse<T> {
     error?: string;                
     timestamp?: string;            
 }
+
+
+export interface Descriptor {
+    id: string
+    name: string
+}

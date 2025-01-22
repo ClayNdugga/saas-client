@@ -19,7 +19,7 @@ export function DevPopover() {
   }
 
   async function delFile() {
-    const res = await apiClient.delete("api/files/YTC architecture.png");
+    const res = await apiClient.delete("api/files/z6JKTHDAQ3OglUxj2x1q");
     console.log(res);
   }
 
@@ -42,6 +42,8 @@ export function DevPopover() {
     const res = await apiClient.post("api/chats/", { query: "new updated query" });
     console.log(res);
   }
+
+  
   return (
     <Popover>
       <PopoverTrigger asChild>

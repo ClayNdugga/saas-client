@@ -3,7 +3,7 @@ import useChats from '@/hooks/useChats';
 import useFiles from '@/hooks/useFiles';
 import useUser from '@/hooks/useUser';
 import { ApiResponse } from '@/models/api';
-import { FirebaseChat, FirebaseDBUser } from '@/models/firebase';
+import { FirebaseChat, FirebaseDBUser, Citation } from '@/models/firebase';
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
 
@@ -16,14 +16,17 @@ interface DashboardContextType {
   refetchChats: () => Promise<ApiResponse<{ chats: string[] }>>
   refetchFiles: () => Promise<ApiResponse<{ files: string[] }>>
   // chat: ApiResponse<{ chat: FirebaseChat}> | undefined
-  chats: ApiResponse<{ chats: string[] }> | undefined;
-  files: ApiResponse<{ files: string[] }> | undefined;
+  chats: ApiResponse<{ chats: Descriptor[] }> | undefined;
+  files: ApiResponse<{ files: Descriptor[] }> | undefined;
   chatId: string;
   setChatId: React.Dispatch<React.SetStateAction<string>>;
   isChatting: boolean;
   setIsChatting: React.Dispatch<React.SetStateAction<boolean>>;
   fileId: string;
   setFileId: React.Dispatch<React.SetStateAction<string>>;
+  reference: Citation | null;
+  setReference: React.Dispatch<React.SetStateAction<Citation | null>>;
+
 }
 
 // Create the context
@@ -36,8 +39,7 @@ export const DashboardProvider: React.FC<{ children: React.ReactNode }> = ({ chi
   const [fileId, setFileId] = useState<string>('');
   const [isChatting, setIsChatting] = useState(false);
 
-  // const []
-
+  const [reference, setReference] = useState<Citation | null>(null);
 
   const { data: user, isLoading: loadingUser, error: errorUser } = useUser();
   const { data: chats, isLoading: loadingChats, error: errorChats, refetch: refetchChats } = useChats();
@@ -61,7 +63,7 @@ export const DashboardProvider: React.FC<{ children: React.ReactNode }> = ({ chi
 
 
   return (
-    <DashboardContext.Provider value={{ user, loadingUser, chat, setChat, chats, isChatting, setIsChatting, refetchChats, files, refetchFiles, chatId, setChatId, fileId, setFileId }}>
+    <DashboardContext.Provider value={{ user, loadingUser, chat, setChat, chats, isChatting, setIsChatting, refetchChats, files, refetchFiles, chatId, setChatId, fileId, setFileId, reference, setReference}}>
       {children}
     </DashboardContext.Provider>
   );

@@ -1,10 +1,12 @@
-import { ApiResponse } from "@/models/api";
+import { ApiResponse, Descriptor } from "@/models/api";
 import apiClient from "@/services/api-client";
 
 import { useQuery } from "@tanstack/react-query";
 
+
+
 const useFiles = () =>
-  useQuery<ApiResponse<{ files: string[] }>>({
+  useQuery<ApiResponse<{ files: Descriptor[] }>>({
     queryKey: ["Files"],
     queryFn: async () => {
       return apiClient.get("/api/files");

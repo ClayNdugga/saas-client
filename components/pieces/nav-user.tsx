@@ -20,6 +20,7 @@ import { useRouter } from "next/navigation";
 // import { signOut } from "firebase/auth";
 import { FirebaseUser } from "@/models/firebase";
 import { useDashboard } from "@/contexts/DashboardContext";
+import apiClient from "@/services/api-client";
 
 interface NavUserProps {
   user: FirebaseUser;
@@ -35,8 +36,8 @@ export function NavUser() {
 
   // const [signOut] = useSignOut(auth);
 
-  function handleLogOut() {
-    // signOut();
+  async function handleLogOut() {
+    await apiClient.post("/api/auth/logout");
     router.push("/");
   }
 

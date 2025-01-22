@@ -15,10 +15,10 @@ import {
 } from "@/components/ui/navigation-menu";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 
-import { useAuthState } from "react-firebase-hooks/auth";
-import { auth } from "@/firebase/config";
+import { useAuth } from "@/contexts/AuthContext";
 import { useRouter } from "next/navigation";
-import { signOut } from "firebase/auth";
+import apiClient from "@/services/api-client";
+
 
 const subMenuItemsOne = [
   {
@@ -68,10 +68,10 @@ const subMenuItemsTwo = [
 
 const Header = () => {
   const router = useRouter();
-  const [user] = useAuthState(auth);
+  const { isAuthenticated, isLoading } = useAuth();
 
   async function handleLogOut() {
-    await signOut(auth);
+    await apiClient.post("/api/auth/logout");
     router.push("/");
   }
 
@@ -181,7 +181,7 @@ const Header = () => {
             </div>
           </div>
           <div className="flex gap-2">
-            {user ? (
+            {isAuthenticated ? (
               <>
                 <Button onClick={() => router.push("/dashboard")} variant="outline">
                   Dashboard
@@ -344,7 +344,7 @@ const Header = () => {
                     </a>
                   </div>
                   <div className="mt-2 flex flex-col gap-3">
-                    {user ? (
+                    {isAuthenticated ? (
                       <>
                         <Button onClick={() => router.push("/dashboard")} variant="outline">
                           Dashboard

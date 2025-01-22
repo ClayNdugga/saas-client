@@ -27,6 +27,7 @@ import { highlightPlugin, RenderHighlightTargetProps } from "@react-pdf-viewer/h
 import PDFViewer from "./pdf-viewer";
 import { DevPopover } from "./dev-popover";
 
+
 export default function Dashboard() {
   const defaultLayoutPluginInstance = defaultLayoutPlugin({
     sidebarTabs: (defaultTabs) => [
@@ -51,7 +52,7 @@ export default function Dashboard() {
   return (
     <SidebarProvider>
       <AppSidebar />
-      <SidebarInset>
+      <SidebarInset className="overflow-hidden">
         <div className=" flex flex-col h-screen overflow-hidden">
           <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12">
             <div className="flex items-center gap-2 px-4">
@@ -69,13 +70,13 @@ export default function Dashboard() {
           </header>
 
           <div className="flex flex-1 p-4 overflow-hidden">
-            <ResizablePanelGroup direction="horizontal" className="overflow-auto rounded-lg border w-full">
-              <ResizablePanel className="p-4" minSize={30}>
+            <ResizablePanelGroup direction="horizontal" className="rounded-lg border w-full">
+              <ResizablePanel className="p-4 overflow-hidden" minSize={30}>
                 {fileId ? (
                   isLoadingFile ? (
                     <div>Loading file...</div>
                   ) : fileData?.data.signedUrl ? (
-                    <div className="scrollbar-thin scrollbar-thumb-rounded-lg scrollbar-thumb-gray-300 scrollbar-track-transparent hover:scrollbar-thumb-gray-400">
+                    <div className="h-full overflow-auto scrollbar-thin scrollbar-thumb-rounded-lg scrollbar-thumb-gray-300 scrollbar-track-transparent hover:scrollbar-thumb-gray-400">
                       <PDFViewer fileData={fileData} />
                     </div>
                   ) : (
@@ -87,9 +88,9 @@ export default function Dashboard() {
               </ResizablePanel>
               <ResizableHandle />
 
-              <ResizablePanel className="p-4" minSize={30}>
+              <ResizablePanel className="p-4 overflow-hidden" minSize={30}>
                 {chatId || isChatting ? (
-                  <div className="flex flex-col h-full">
+                  <div className="flex flex-col h-full overflow-hidden  ">
                     <div className="flex-1 overflow-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent hover:scrollbar-thumb-gray-400">
                       {chat &&
                         chat.messages.map((message, index) => (
@@ -97,11 +98,12 @@ export default function Dashboard() {
                             key={message.messageId}
                             content={message.content}
                             role={message.role}
-                            isLastMessage={index === chat.messages.length - 1}
+                            references={message.references}
+                            // isLastMessage={index === chat.messages.length - 1}
                           />
                         ))}
                     </div>
-                    <div className="mt-4">
+                    <div className="mt-4 px-1 pb-1">
                       <ChatInput />
                     </div>
                   </div>
