@@ -15,9 +15,14 @@ class APIClient {
     //   async (error) => {
     //     const originalRequest = error.config;
 
-    //     if (error.response?.status === 401 && !originalRequest._retry) {
+    //     // Skip refresh token attempt if the failed request was itself a refresh token request
+    //     // or if we've already tried to refresh once
+    //     if (error.response?.status === 401 
+    //         && !originalRequest._retry 
+    //         && originalRequest.url !== '/api/auth/refresh-token') {
     //       originalRequest._retry = true;
     //       try {
+    //         console.log("Refreshing token");
     //         await this.client.post('/api/auth/refresh-token');
     //         return this.client(originalRequest);
     //       } catch (refreshError) {
@@ -60,15 +65,15 @@ class APIClient {
       "Content-Type": isFormData ? "multipart/form-data" : "application/json",
       ...config?.headers,
     };
-
+    
     const res = await this.client.post(endpoint, data, { ...config, headers });
     return res.data;
   }
-
-  // async patch<T>(endpoint: string, data: any, config?:AxiosRequestConfig): Promise<T> {
-  //     const res = await this.client.patch(endpoint, data, config)
-  //     return res.data
-  // }
+  
+  async patch<T>(endpoint: string, data: any, config?:AxiosRequestConfig): Promise<T> {
+      const res = await this.client.patch(endpoint, data, config)
+      return res.data
+  }
 }
 
 const apiClient = new APIClient("http://localhost:3000");

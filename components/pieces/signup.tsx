@@ -6,13 +6,9 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 
-import { useCreateUserWithEmailAndPassword, useUpdateProfile } from "react-firebase-hooks/auth";
-import { auth } from "@/firebase/config";
 import { useRouter } from "next/navigation";
-import axios from "axios";
-import apiClient from "@/services/api-client";
 
-import { signInWithCustomToken } from "firebase/auth";
+import { useAuth } from "@/contexts/AuthContext";
 
 export default function SignUp() {
   const [name, setName] = useState("");
@@ -21,8 +17,7 @@ export default function SignUp() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [matched, setMatched] = useState(true);
 
-  const [createUserWithEmailAndPassword, user, loading, error] = useCreateUserWithEmailAndPassword(auth);
-  const [updateProfile, loadingProfile, errorProfile] = useUpdateProfile(auth);
+  const { signup } = useAuth();
 
   const router = useRouter();
 
@@ -35,13 +30,7 @@ export default function SignUp() {
         return;
       }
 
-      const userData = { name, email, password };
-      const res = await apiClient.post("/api/auth/signup", userData);
-      const userCredential = await signInWithCustomToken(auth, res.accessToken);
-      const idToken = await userCredential.user.getIdToken();
-
-      console.log("Signed in as:", userCredential.user);
-      localStorage.setItem("authToken", idToken);
+      await signup(name, email, password);
       router.push("/dashboard");
     } catch (err) {
       console.log(err);

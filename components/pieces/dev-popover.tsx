@@ -19,7 +19,7 @@ export function DevPopover() {
   }
 
   async function delFile() {
-    const res = await apiClient.delete("api/files/z6JKTHDAQ3OglUxj2x1q");
+    const res = await apiClient.delete("api/files/bda3pxXhKh17Rko0Shb9");
     console.log(res);
   }
 

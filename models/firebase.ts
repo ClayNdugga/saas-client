@@ -58,3 +58,19 @@ export interface Citation {
   boundingBox: number[];
   folderId: string;
 }
+
+export interface FirebaseFile {
+  // fileId: string
+  userId: string;
+  name: string
+  size: number;
+  type: string;
+  folderId: string | "root";
+  storagePath: string;
+  uploadedAt: string;
+  status: "processing" | "processed" | "error";
+  embeddingMetadata: {
+    namespace: string;
+    folderId: string;
+  };  
+}

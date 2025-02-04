@@ -15,7 +15,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoadingAuth, setIsLoadingAuth] = useState(true);
 
   useEffect(() => {
     checkAuthStatus();
@@ -29,7 +29,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     } catch (error) {
       setIsAuthenticated(false);
     } finally {
-      setIsLoading(false);
+      setIsLoadingAuth(false);
     }
   };
 
@@ -38,8 +38,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     setIsAuthenticated(true);
   };
 
-  const signup = async (email: string, password: string) => {
-    await apiClient.post("/api/auth/signup", { email, password });
+  const signup = async (name: string, email: string, password: string) => {
+    await apiClient.post("/api/auth/signup", { name,email, password });
     setIsAuthenticated(true);
   };
 
@@ -49,7 +49,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, isLoading, login, signup, logout }}>
+    <AuthContext.Provider value={{ isAuthenticated, isLoading: isLoadingAuth, login, signup, logout }}>
       {children}
     </AuthContext.Provider>
   );

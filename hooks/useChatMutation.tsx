@@ -4,15 +4,15 @@ import { Message } from "@/models/firebase";
 import apiClient from "@/services/api-client";
 import { useMutation } from "@tanstack/react-query";
 
-const mutateChat = (chatId: string, query: string, fileId: string) =>
-  apiClient.post<ApiResponse<{ responseMessage: Message }>>(`/api/chats/${chatId}`, { fileId, query });
+const mutateChat = (chatId: string, query: string, fileIds: string[]) =>
+  apiClient.post<ApiResponse<{ responseMessage: Message }>>(`/api/chats/${chatId}`, { fileIds, query });
 
 export const useChatMutation = () => {
   // Grab setChat from context
-  const { chat, setChat, chatId } = useDashboard();
+  const { chat, setChat, chatId, refetchChat } = useDashboard();
 
   return useMutation({
-    mutationFn: (variables: { query: string; fileId: string }) => mutateChat(chatId, variables.query, variables.fileId),
+    mutationFn: (variables: { query: string; fileIds: string[] }) => mutateChat(chatId, variables.query, variables.fileIds),
     onMutate: (userMessage) => {
       // Creating new messages for user and system placeholders
       const newMessage: Message = {
@@ -54,6 +54,7 @@ export const useChatMutation = () => {
         }
 
         updatedChat.messages = updatedMessages;
+        refetchChat()
         return updatedChat;
       });
     },

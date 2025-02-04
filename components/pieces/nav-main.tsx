@@ -1,20 +1,7 @@
 "use client";
 
-import {
-  ChevronRight,
-  type LucideIcon,
-  MessageSquareText,
-  File,
-  Plus,
-  MoreHorizontal,
-  Pencil,
-  Trash,
-  Folder,
-  Forward,
-  Trash2,
-} from "lucide-react";
+import { type LucideIcon, MessageSquareText, File, Plus, MoreHorizontal, Pencil, Trash2 } from "lucide-react";
 
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import {
   SidebarGroup,
   SidebarGroupLabel,
@@ -22,106 +9,227 @@ import {
   SidebarMenuAction,
   SidebarMenuButton,
   SidebarMenuItem,
-  SidebarMenuSub,
-  SidebarMenuSubButton,
-  SidebarMenuSubItem,
   useSidebar,
 } from "@/components/ui/sidebar";
-import { DashboardProvider, useDashboard } from "@/contexts/DashboardContext";
+import { useDashboard } from "@/contexts/DashboardContext";
 
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuGroup,
   DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuPortal,
-  DropdownMenuSeparator,
-  DropdownMenuShortcut,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import apiClient from "@/services/api-client";
-export function NavMain({
-  items,
-}: {
-  items: {
-    title: string;
-    url: string;
-    icon?: LucideIcon;
-    isActive?: boolean;
-    items?: {
-      title: string;
-      url: string;
-    }[];
-  }[];
-}) {
-  const { chats, files, chatId, setChatId, fileId, setFileId } = useDashboard();
-  const { isMobile } = useSidebar()
+import { FileUploadArea } from "./file-upload-area";
+import { useDeleteChatMuation } from "@/hooks/useChatDeleteMutation";
+import { useDeleteFileMuation } from "@/hooks/useFileDeleteMutation";
+import { FirebaseFile } from "@/models/firebase";
+import { Descriptor } from "@/models/api";
+import { useState } from "react";
+import { useRenameFileMuation } from "@/hooks/useFileRenameMutation";
+import { useRenameChatMuation } from "@/hooks/useChatRenameMutation";
 
-  async function deleteChat(deleteChatId: string) {
-    await apiClient.delete(`/api/chats/${deleteChatId}`);
+export function NavMain() {
+  const {
+    chats,
+    files,
+    chatId,
+    setChatId,
+    fileId,
+    setFileId,
+    setReference,
+    setIsPdfLoaded,
+    activeFiles,
+    setActiveFiles,
+    highlightFiles,
+  } = useDashboard();
+  const { isMobile, open } = useSidebar();
+
+  // const { mutate: deleteChat } = useChatDeleteMutation();
+  const deleteChatMutation = useDeleteChatMuation();
+  const deleteFileMutation = useDeleteFileMuation();
+
+  const renameFileMutation = useRenameFileMuation();
+  const renameChatMutation = useRenameChatMuation();
+
+  // async function deleteChat(deleteChatId: string) {
+  //   await apiClient.delete(`/api/chats/${deleteChatId}`);
+  // }
+
+  const [renamingFileId, setRenamingFileId] = useState<string>(""); // Tracks the file being renamed
+  const [renameFileValue, setRenameFileValue] = useState<string>(""); // Tracks the input value for renaming
+
+  const [renamingChatId, setRenamingChatId] = useState<string>("");
+  const [renameChatValue, setRenameChatValue] = useState<string>("");
+
+  const handleRenameFile = (fileId: string, newName: string) => {
+    if (newName.trim() === "") {
+      // Prevent renaming to an empty string
+      console.error("File name cannot be empty");
+      setRenamingFileId("");
+      return;
+    }
+    renameFileMutation.mutate({ fileId, newName });
+  };
+
+  const handleRenameChat = (chatId: string, newName: string) => {
+    if (newName.trim() === "") {
+      console.error("Chat name cannot be empty");
+      setRenamingChatId("");
+      return;
+    }
+    renameChatMutation.mutate({ chatId, newName });
+  };
+
+  function handleFileClick(file: Descriptor) {
+    setIsPdfLoaded(false);
+    setFileId(file.id);
+    setReference(null);
+  }
+
+  function handleNewChat() {
+    setChatId("");
+    setActiveFiles([]);
+    setFileId("");
   }
 
   return (
-    <SidebarGroup>
-      <SidebarGroupLabel>Platform</SidebarGroupLabel>
-      <SidebarMenu>
-        {/* custom */}
-        <SidebarMenuItem>
-          <SidebarMenuButton tooltip="Conversations" onClick={() => setChatId("")}>
-            {/* <SidebarMenuButton tooltip="Conversations" onClick={}> */}
-            <MessageSquareText />
-            <span>Conversations</span>
-            <Plus className="ml-auto" />
-          </SidebarMenuButton>
-          <SidebarMenuSub>
-            {/* {chats &&
-              chats.data?.chats.map((chat) => (
-                <SidebarMenuSubItem key={chat} onClick={() => setChatId(chat)}>
-                  <SidebarMenuSubButton asChild>
-                    <span>{chat}</span>
-                  </SidebarMenuSubButton>
-                </SidebarMenuSubItem>
-              ))} */}
+    <SidebarGroup className="flex flex-col h-full">
+      <div className="flex flex-col h-2/5">
+        {chats && chats.length > 0 && (
+          <Button variant="outline" className="w-full" onClick={handleNewChat}>
+            {open ? "New Chat" : <Plus className="w-4 h-4" />}
+          </Button>
+        )}
+        <SidebarGroupLabel>Chats</SidebarGroupLabel>
 
-            {chats &&
-              chats.data?.chats.map((chat, index) => (
-                <SidebarMenuSubItem
-                  key={chat.id}
-                  onClick={() => setChatId(chat.id)}
-                  className="flex items-center justify-between group/item"
-                >
-                  <SidebarMenuSubButton asChild>
-                    <span>{chat.name}</span>
-                  </SidebarMenuSubButton>
+        <SidebarMenu>
+          {chats && chats.length > 0 ? (
+            <>
+              {chats.map((chat) => (
+                <SidebarMenuItem key={chat.name} onClick={() => setChatId(chat.id)}>
+                  <SidebarMenuButton asChild>
+                    <div className="flex flex-row">
+                      <MessageSquareText />
+                      {renamingChatId === chat.id ? (
+                        // Render input when renaming
+                        <input
+                          type="text"
+                          value={renameChatValue}
+                          onChange={(e) => setRenameChatValue(e.target.value)}
+                          onKeyDown={(e) => {
+                            if (e.key === "Enter") {
+                              handleRenameChat(chat.id, renameChatValue);
+                              console.log(`renaming chat: ${chat.id} to ${renameChatValue}`);
+                              setRenamingChatId("");
+                            }
+                          }}
+                          // onBlur={() => console.log(`renaming chat: ${chat.id} to ${renamechatValue}`)}
+                          onBlur={() => handleRenameChat(chat.id, renameChatValue)}
+                          className="bg-transparent border-b border-muted-foreground outline-none focus:border-primary"
+                          autoFocus
+                        />
+                      ) : (
+                        // Render chat name normally
+                        <span>{chat.name}</span>
+                      )}{" "}
+                    </div>
+                  </SidebarMenuButton>
                   <DropdownMenu>
-                    <DropdownMenuTrigger className="opacity-0 group-hover/item:opacity-100 transition-opacity">
-                      <MoreHorizontal className="h-4 w-4" />
+                    <DropdownMenuTrigger asChild>
+                      <SidebarMenuAction showOnHover>
+                        <MoreHorizontal />
+                        <span className="sr-only">More</span>
+                      </SidebarMenuAction>
                     </DropdownMenuTrigger>
-                    <DropdownMenuContent className="w-28">
-                      <DropdownMenuItem>
-                        <Pencil />
-                        <span>Rename</span>
+                    <DropdownMenuContent
+                      className="w-48 rounded-lg pointer-events-auto"
+                      side={isMobile ? "bottom" : "right"}
+                      align={isMobile ? "end" : "start"}
+                    >
+                      <DropdownMenuItem
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setRenamingChatId(chat.id);
+                          setRenameChatValue(chat.name);
+                        }}
+                      >
+                        <Pencil className="text-muted-foreground" />
+                        <span>Rename Chat</span>
                       </DropdownMenuItem>
-                      <DropdownMenuItem onClick={() => deleteChat(chat)}>
-                        <Trash />
-                        <span>Delete</span>
+                      <DropdownMenuItem
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          deleteChatMutation.mutate(chat.id);
+                          console.log("Delete Chat");
+                        }}
+                      >
+                        <Trash2 className="text-muted-foreground" />
+                        <span>Delete Chat</span>
                       </DropdownMenuItem>
                     </DropdownMenuContent>
                   </DropdownMenu>
-                </SidebarMenuSubItem>
+                </SidebarMenuItem>
               ))}
+              <SidebarMenuItem>
+                <SidebarMenuButton className="text-sidebar-foreground/70">
+                  <MoreHorizontal className="text-sidebar-foreground/70" onClick={() => console.log(chats)} />
+                  <span>All Chats</span>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            </>
+          ) : (
+            <SidebarMenuItem>
+              <SidebarMenuButton className="text-sidebar-foreground/70" onClick={handleNewChat}>
+                <Plus className="text-sidebar-foreground/70" />
+                <span>New chat</span>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+          )}
+        </SidebarMenu>
+      </div>
+      <div className="flex flex-col">
+        <SidebarGroupLabel>Files</SidebarGroupLabel>
 
-            {/* {chats &&
-              chats.data?.chats.map((chat) => (
-                <SidebarMenuSubItem key={chat}>
-                  <SidebarMenuSubButton asChild>
-                    <span>{chat}</span>
-                  </SidebarMenuSubButton>
+        <SidebarMenu>
+          {files && files.length > 0 ? (
+            <>
+              {files.map((file) => (
+                <SidebarMenuItem
+                  key={file.name}
+                  className={`transition ${
+                    highlightFiles ? "border-rounded-lg border-blue-500 bg-blue-100" : "border border-transparent"
+                  }`}
+                  onClick={() => handleFileClick(file)}
+                >
+                  <SidebarMenuButton asChild>
+                    <div className="flex flex-row">
+                      <File />
+                      {renamingFileId === file.id ? (
+                        // Render input when renaming
+                        <input
+                          type="text"
+                          value={renameFileValue}
+                          onChange={(e) => setRenameFileValue(e.target.value)}
+                          onKeyDown={(e) => {
+                            if (e.key === "Enter") {
+                              handleRenameFile(file.id, renameFileValue);
+                              console.log(`renaming file: ${file.id} to ${renameFileValue}`);
+                              setRenamingFileId("");
+                            }
+                          }}
+                          // onBlur={() => console.log(`renaming file: ${file.id} to ${renameFileValue}`)}
+                          onBlur={() => handleRenameFile(file.id, renameFileValue)}
+                          className="bg-transparent border-b border-muted-foreground outline-none focus:border-primary"
+                          autoFocus
+                        />
+                      ) : (
+                        // Render file name normally
+                        <span>{file.name}</span>
+                      )}{" "}
+                    </div>
+                  </SidebarMenuButton>
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                       <SidebarMenuAction showOnHover>
@@ -134,111 +242,95 @@ export function NavMain({
                       side={isMobile ? "bottom" : "right"}
                       align={isMobile ? "end" : "start"}
                     >
-                      <DropdownMenuItem>
-                        <Folder className="text-muted-foreground" />
-                        <span>View Project</span>
+                      <DropdownMenuItem
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          if (!activeFiles.some((f) => f.id === file.id)) {
+                            setActiveFiles([...activeFiles, file]);
+                          }
+                        }}
+                      >
+                        <Plus className="text-muted-foreground" />
+                        <span> Add to chat</span>
                       </DropdownMenuItem>
-                      <DropdownMenuItem>
-                        <Forward className="text-muted-foreground" />
-                        <span>Share Project</span>
+                      <DropdownMenuItem
+                        onClick={(e) => {
+                          console.log("renaming file");
+                          e.stopPropagation();
+                          setRenamingFileId(file.id); // Set renaming mode
+                          setRenameFileValue(file.name); // Initialize input with current name
+                        }}
+                      >
+                        <Pencil className="text-muted-foreground" />
+                        <span>Rename File</span>
                       </DropdownMenuItem>
-                      <DropdownMenuSeparator />
-                      <DropdownMenuItem>
+                      <DropdownMenuItem
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          deleteFileMutation.mutate(file.id);
+                          console.log("Delete file");
+                        }}
+                      >
                         <Trash2 className="text-muted-foreground" />
-                        <span>Delete Project</span>
+                        <span>Delete File</span>
                       </DropdownMenuItem>
                     </DropdownMenuContent>
                   </DropdownMenu>
-                </SidebarMenuSubItem>
-
-
-              ))} */}
-          </SidebarMenuSub>
-        </SidebarMenuItem>
-        {/* {[{name: "Project 1", url: "/project1", icon: Folder}, {name: "Project 2", url: "/project2", icon: Folder}].map((item) => (
-          <SidebarMenuSubItem key={item.name}>
-            <SidebarMenuSubButton asChild>
-              <a href={item.url}>
-                <item.icon />
-                <span>{item.name}</span>
-              </a>
-            </SidebarMenuSubButton>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <SidebarMenuAction showOnHover>
-                  <MoreHorizontal />
-                  <span className="sr-only">More</span>
-                </SidebarMenuAction>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent
-                className="w-48 rounded-lg"
-                side={isMobile ? "bottom" : "right"}
-                align={isMobile ? "end" : "start"}
-              >
-                <DropdownMenuItem>
-                  <Folder className="text-muted-foreground" />
-                  <span>View Project</span>
-                </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <Forward className="text-muted-foreground" />
-                  <span>Share Project</span>
-                </DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem>
-                  <Trash2 className="text-muted-foreground" />
-                  <span>Delete Project</span>
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </SidebarMenuSubItem>
-        ))} */}
-
-        <SidebarMenuItem>
-          <SidebarMenuButton tooltip="Files" onClick={() => setFileId("")}>
-            <File />
-            <span>Files</span>
-            <Plus className="ml-auto" />
-          </SidebarMenuButton>
-          <SidebarMenuSub>
-            {files &&
-              files.data?.files.map((file) => (
-                <SidebarMenuSubItem key={file.id} onClick={() => setFileId(file.id)}>
-                  <SidebarMenuSubButton asChild>
-                    <span>{file.name}</span>
-                  </SidebarMenuSubButton>
-                </SidebarMenuSubItem>
+                </SidebarMenuItem>
               ))}
-          </SidebarMenuSub>
-        </SidebarMenuItem>
-        {/* custom */}
-
-        {/* {items.map((item) => (
-            <Collapsible key={item.title} asChild defaultOpen={item.isActive} className="group/collapsible">
               <SidebarMenuItem>
-                <CollapsibleTrigger asChild>
-                  <SidebarMenuButton tooltip={item.title}>
-                    {item.icon && <item.icon />}
-                    <span>{item.title}</span>
-                    <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
-                  </SidebarMenuButton>
-                </CollapsibleTrigger>
-                <CollapsibleContent>
-                  <SidebarMenuSub>
-                    {item.items?.map((subItem) => (
-                      <SidebarMenuSubItem key={subItem.title}>
-                        <SidebarMenuSubButton asChild>
-                          <a href={subItem.url}>
-                            <span>{subItem.title}</span>
-                          </a>
-                        </SidebarMenuSubButton>
-                      </SidebarMenuSubItem>
-                    ))}
-                  </SidebarMenuSub>
-                </CollapsibleContent>
+                <SidebarMenuButton className="text-sidebar-foreground/70">
+                  <MoreHorizontal className="text-sidebar-foreground/70" />
+                  <span>All Files</span>
+                </SidebarMenuButton>
               </SidebarMenuItem>
-            </Collapsible>
-          ))} */}
-      </SidebarMenu>
+              {open && <FileUploadArea />}
+            </>
+          ) : (
+            <FileUploadArea />
+          )}
+        </SidebarMenu>
+      </div>
     </SidebarGroup>
   );
 }
+
+// <SidebarMenu>
+// <SidebarMenuItem>
+//   <SidebarMenuButton tooltip="Conversations" onClick={handleNewChat}>
+//     {/* <SidebarMenuButton tooltip="Conversations" onClick={}> */}
+//     <MessageSquareText />
+//     <span>Conversations</span>
+//     <Plus className="ml-auto" />
+//   </SidebarMenuButton>
+//   <SidebarMenuSub>
+//     {chats &&
+//       chats.data?.chats.map((chat, index) => (
+//         <SidebarMenuSubItem
+//           key={chat.id}
+//           onClick={() => setChatId(chat.id)}
+//           className="flex items-center justify-between group/item"
+//         >
+//           <SidebarMenuSubButton asChild>
+//             <span>{chat.name}</span>
+//           </SidebarMenuSubButton>
+//           <DropdownMenu>
+//             <DropdownMenuTrigger className="opacity-0 group-hover/item:opacity-100 transition-opacity">
+//               <MoreHorizontal className="h-4 w-4" />
+//             </DropdownMenuTrigger>
+//             <DropdownMenuContent className="w-28">
+//               <DropdownMenuItem>
+//                 <Pencil />
+//                 <span>Rename</span>
+//               </DropdownMenuItem>
+//               <DropdownMenuItem onClick={() => deleteChat(chat.id)}>
+//                 <Trash />
+//                 <span>Delete</span>
+//               </DropdownMenuItem>
+//             </DropdownMenuContent>
+//           </DropdownMenu>
+//         </SidebarMenuSubItem>
+//       ))}
+
+//   </SidebarMenuSub>
+// </SidebarMenuItem>

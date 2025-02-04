@@ -21,6 +21,7 @@ import { useRouter } from "next/navigation";
 import { FirebaseUser } from "@/models/firebase";
 import { useDashboard } from "@/contexts/DashboardContext";
 import apiClient from "@/services/api-client";
+import { useAuth } from "@/contexts/AuthContext";
 
 interface NavUserProps {
   user: FirebaseUser;
@@ -32,12 +33,12 @@ export function NavUser() {
 
   // const [user, loadingUser] = useAuthState(auth);
 
-  const {user, loadingUser} = useDashboard()
-
+  const { user, loadingUser } = useDashboard();
+  const { logout } = useAuth();
   // const [signOut] = useSignOut(auth);
 
   async function handleLogOut() {
-    await apiClient.post("/api/auth/logout");
+    await logout();
     router.push("/");
   }
 
@@ -82,7 +83,7 @@ export function NavUser() {
                 <Avatar className="h-8 w-8 rounded-lg">
                   <AvatarImage
                     src="https://github.com/shadcn.png"
-                    alt={loadingUser ? "Loading..." : user?.data?.userData.email|| "User"}
+                    alt={loadingUser ? "Loading..." : user?.data?.userData.email || "User"}
                   />
                   <AvatarFallback className="rounded-lg">CN</AvatarFallback>
                 </Avatar>
@@ -91,23 +92,21 @@ export function NavUser() {
                     {loadingUser ? "Loading..." : user?.data?.userData.displayName || "Guest"}
                   </span>
                   <span className="truncate text-xs">
-                    {loadingUser ? "Please wait..." : user?.data?.userData.email|| "No email available"}
+                    {loadingUser ? "Please wait..." : user?.data?.userData.email || "No email available"}
                   </span>
                 </div>
               </div>
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
-            {true && (
-              <>
-                <DropdownMenuGroup>
-                  <DropdownMenuItem onClick={() => router.push("/pricing")}>
-                    <Sparkles />
-                    Upgrade to Pro
-                  </DropdownMenuItem>
-                </DropdownMenuGroup>
-                <DropdownMenuSeparator />
-              </>
-            )}
+
+            {/* <DropdownMenuGroup>
+              <DropdownMenuItem onClick={() => router.push("/pricing")}>
+                <Sparkles />
+                Upgrade to Pro
+              </DropdownMenuItem>
+            </DropdownMenuGroup>
+            <DropdownMenuSeparator />
+
             <DropdownMenuGroup>
               <DropdownMenuItem onClick={() => console.log(user)}>
                 <BadgeCheck />
@@ -118,7 +117,7 @@ export function NavUser() {
                 Billing
               </DropdownMenuItem>
             </DropdownMenuGroup>
-            <DropdownMenuSeparator />
+            <DropdownMenuSeparator /> */}
 
             <DropdownMenuItem onClick={handleLogOut}>
               <LogOut />

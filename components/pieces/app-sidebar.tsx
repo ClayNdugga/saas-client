@@ -18,11 +18,14 @@ import { NavMain } from "@/components/pieces/nav-main";
 import { NavProjects } from "@/components/pieces/nav-projects";
 import { NavUser } from "@/components/pieces/nav-user";
 import { TeamSwitcher } from "@/components/pieces/team-switcher";
-import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarRail } from "@/components/ui/sidebar";
+import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarRail, SidebarTrigger, useSidebar } from "@/components/ui/sidebar";
+
+import { GalleryHorizontalIcon } from "lucide-react";
 
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "@/firebase/config";
 import { FirebaseUser } from "@/models/firebase";
+import { DevPopover } from "./dev-popover";
 
 // This is sample data.
 const data = {
@@ -93,13 +96,27 @@ const data = {
 };
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  
+  const { isMobile, open, setOpen } = useSidebar()
+
+
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
-        <TeamSwitcher teams={data.teams} />
+        {/* <TeamSwitcher teams={data.teams} /> */}
+
+        <div className="flex flex-row justify-between items-center">
+            {open && <>
+              <GalleryHorizontalIcon />
+              <DevPopover />
+            </>}
+            <SidebarTrigger />
+        </div>
+
       </SidebarHeader>
       <SidebarContent>
-        <NavMain items={data.navMain} />
+        <NavMain />
+        {/* <NavMain items={data.navMain} /> */}
         {/* <NavProjects projects={data.projects} /> */}
       </SidebarContent>
       <SidebarFooter>

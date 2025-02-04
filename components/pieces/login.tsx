@@ -1,6 +1,5 @@
 "use client";
 
-import axios from "axios";
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -8,15 +7,8 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 
-import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
-import { auth } from "@/firebase/config";
 
 import { useRouter } from "next/navigation";
-import { AlertCircle } from "lucide-react";
-import { Alert, AlertDescription } from "../ui/alert";
-import apiClient from "@/services/api-client";
-import { signInWithCustomToken } from "firebase/auth";
-import { ApiResponse } from "@/models/api";
 import { useAuth } from "@/contexts/AuthContext";
 
 export default function Login() {
@@ -34,14 +26,6 @@ export default function Login() {
 
       await login(email, password);
       router.push("/dashboard");
-
-      // const userData = { email, password };
-      // const res = await apiClient.post<ApiResponse<{ accessToken: string }>>("/api/auth/login", userData);
-      // const userCredential = await signInWithCustomToken(auth, res.data?.accessToken);
-      // const idToken = await userCredential.user.getIdToken();
-      // console.log("Signed in as:", userCredential.user);
-      // localStorage.setItem("authToken", idToken);
-      // router.push("/dashboard");
 
   
     } catch (err) {

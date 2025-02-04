@@ -4,19 +4,22 @@ import { FirebaseChat, Message, Citation } from "@/models/firebase";
 import apiClient from "@/services/api-client";
 import { useMutation } from "@tanstack/react-query";
 
-const mutateChat = (query: string, fileId: string) =>
+const mutateChat = (query: string, fileIds: string[]) =>
   apiClient.post<ApiResponse<{ responseMessage: Message; chatId: string; references: Citation[] }>>("/api/chats", {
     query,
-    fileId,
+    fileIds,
   });
 
 const useCreateChatMutation = () => {
-  const { setChat, setChatId, refetchChats, setIsChatting } = useDashboard();
+  const { setChat, setChatId, refetchChats, setIsChatting, setChats } = useDashboard();
 
   return useMutation({
-    mutationFn: (variables: { query: string; fileId: string }) => mutateChat(variables.query, variables.fileId),
+    mutationFn: (variables: { query: string; fileIds: string[] }) => mutateChat(variables.query, variables.fileIds),
     onMutate: (userMessage) => {
       setIsChatting(true);
+      setChats((prev) => {
+        return [{id:"placeholder", name:"New chat"}, ...prev]
+      })
       // Creating new messages for user and system placeholders
       const newMessage: Message = {
         messageId: "client-side-placeholder-user",
@@ -48,7 +51,7 @@ const useCreateChatMutation = () => {
 
       // Handle successful mutation (replacing loading placeholder with response)
       setChat((prevChat) => {
-        const updatedChat = { ...prevChat };
+        const updatedChat = { ...prevChat } as FirebaseChat;
         const updatedMessages = [...updatedChat.messages];
 
         // Find the loading placeholder and replace it with the actual system message
@@ -56,18 +59,21 @@ const useCreateChatMutation = () => {
           (message) => message.messageId === "client-side-placeholder-system"
         );
         if (loadingIndex !== -1) {
-          updatedMessages[loadingIndex] = data.data?.responseMessage;
+          updatedMessages[loadingIndex] = data.data.responseMessage;
         }
 
         updatedChat.messages = updatedMessages;
         return updatedChat;
       });
-
+      
       setChatId(data.data?.chatId);
       setIsChatting(false);
       refetchChats();
     },
-    onError: (error) => {},
+    onError: (error) => {
+      refetchChats()
+    },
+
   });
 };
 
