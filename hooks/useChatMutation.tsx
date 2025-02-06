@@ -1,6 +1,6 @@
 import { useDashboard } from "@/contexts/DashboardContext";
 import { ApiResponse } from "@/models/api";
-import { Message } from "@/models/firebase";
+import { FirebaseChat, Message } from "@/models/firebase";
 import apiClient from "@/services/api-client";
 import { useMutation } from "@tanstack/react-query";
 
@@ -31,7 +31,7 @@ export const useChatMutation = () => {
 
       // Update the chat state by appending the new messages to existing ones
       setChat((prevChat) => {
-        const updatedChat = { ...prevChat };
+        const updatedChat = { ...prevChat } as FirebaseChat;
         updatedChat.messages = [...updatedChat.messages, newMessage, loadingMessage];
         return updatedChat;
       });
@@ -42,7 +42,7 @@ export const useChatMutation = () => {
       console.log(data.data?.responseMessage);
       // Handle successful mutation (replacing loading placeholder with response)
       setChat((prevChat) => {
-        const updatedChat = { ...prevChat };
+        const updatedChat = { ...prevChat } as FirebaseChat;
         const updatedMessages = [...updatedChat.messages];
 
         // Find the loading placeholder and replace it with the actual system message
@@ -61,8 +61,9 @@ export const useChatMutation = () => {
     onError: (error) => {
       // Handle error (replacing loading placeholder with error message)
       setChat((prevChat) => {
-        const updatedChat = { ...prevChat };
+        const updatedChat = { ...prevChat } as FirebaseChat;
         const updatedMessages = [...updatedChat.messages];
+        // const updatedMessages = [...updatedChat.messages];
 
         // Replace the loading placeholder with an error message
         const loadingIndex = updatedMessages.findIndex(

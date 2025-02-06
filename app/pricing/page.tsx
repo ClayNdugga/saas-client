@@ -11,13 +11,13 @@ import { Separator } from "@/components/ui/separator";
 import Header from "@/components/pieces/header";
 
 // import { useAuthState } from "react-firebase-hooks/auth";
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation";
 
 const Pricing4 = () => {
   const [isAnnually, setIsAnnually] = useState(false);
 
   // const [user] = useAuthState(auth);
-  const router = useRouter();
+  // const router = useRouter();
 
   async function handlePurchase(tier: string) {
     // console.log("Purchase from pricing...")
