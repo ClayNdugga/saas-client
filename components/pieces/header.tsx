@@ -67,7 +67,7 @@ const subMenuItemsTwo = [
 
 const Header = () => {
   const router = useRouter();
-  const { isAuthenticated, isLoading, logout } = useAuth();
+  const { isAuthenticated, logout } = useAuth();
 
   async function handleLogOut() {
     await logout();

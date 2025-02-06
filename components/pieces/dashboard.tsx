@@ -18,23 +18,18 @@ import { useAuth } from "@/contexts/AuthContext";
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/components/ui/resizable";
 
 import { Button } from "@/components/ui/button";
-import { defaultLayoutPlugin } from "@react-pdf-viewer/default-layout";
 import PDFViewer from "./pdf-viewer";
 import { Loader2 } from "lucide-react";
 
 import { FileText } from "lucide-react";
 
 export default function Dashboard() {
-  const defaultLayoutPluginInstance = defaultLayoutPlugin({
-    sidebarTabs: (defaultTabs) => [
-      defaultTabs[0], // Thumbnails tab
-    ],
-  });
+  
 
   const router = useRouter();
   const { isAuthenticated, isLoading } = useAuth();
 
-  const { chat, isChatting, chats, files, chatId, setChatId, fileId, setFileId } = useDashboard();
+  const { chat, isChatting, chatId, fileId } = useDashboard();
   const { data: fileData, isLoading: isLoadingFile } = useFile(fileId);
 
   if (isLoading) {
@@ -101,7 +96,7 @@ export default function Dashboard() {
                     <div className="flex flex-col h-full overflow-hidden  ">
                       <div className="flex-1 overflow-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent hover:scrollbar-thumb-gray-400">
                         {chat &&
-                          chat.messages.map((message, index) => (
+                          chat.messages.map((message) => (
                             <Message
                               key={message.messageId}
                               content={message.content}

@@ -11,9 +11,7 @@ import { Separator } from "@/components/ui/separator";
 import Header from "@/components/pieces/header";
 
 // import { useAuthState } from "react-firebase-hooks/auth";
-import { auth } from "@/firebase/config";
 import { useRouter } from "next/navigation";
-import axios from "axios";
 
 const Pricing4 = () => {
   const [isAnnually, setIsAnnually] = useState(false);
@@ -23,25 +21,22 @@ const Pricing4 = () => {
 
   async function handlePurchase(tier: string) {
     // console.log("Purchase from pricing...")
-    // console.log(user)
-    
+    console.log(tier);
+
     // if (!user) {
     //   router.push("/login");
     // }
     // if (tier == "Free") {
     //   router.push("dashboard");
     // }
-    
-  
+
     // const response = await axios.post("/api/create-checkout-session", {user: user, tier: tier});
     // console.log(response)
-    // window.location.href = response.data.url; 
+    // window.location.href = response.data.url;
 
     // // console.log('Login successful:', response.data);
     // // // router.push(response)
     // // router.push("/dashboard")
-
-    
 
     // console.log(user);
     // console.log(`Tier Purchased: ${tier}`);
@@ -114,6 +109,7 @@ const Pricing4 = () => {
                     </li>
                   </ul>
                   <Button onClick={() => handlePurchase("Free")} className="w-full">
+                    {/* <Button onClick={() => handlePurchase("Free")} className="w-full"> */}
                     Get Started for free
                   </Button>
                 </div>

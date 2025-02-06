@@ -16,7 +16,7 @@ import Image from "next/image";
 
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-  const { isMobile, open, setOpen } = useSidebar();
+  const {  open } = useSidebar();
 
   return (
     <Sidebar collapsible="icon" {...props}>

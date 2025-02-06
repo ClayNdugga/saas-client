@@ -4,15 +4,10 @@ import React, { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { Upload, File, X, Send } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import axios from "axios";
 import apiClient from "@/services/api-client";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { auth } from "@/firebase/config";
 import { useDashboard } from "@/contexts/DashboardContext";
 
-interface FileUploadAreaProps {
-  onFileUpload: (file: File | null) => void;
-}
+
 
 export function FileUploadArea() {
   // export function FileUploadArea({ onFileUpload }: FileUploadAreaProps) {
@@ -22,7 +17,6 @@ export function FileUploadArea() {
 
   const {refetchFiles} = useDashboard()
 
-  const [user] = useAuthState(auth);
 
   const onDrop = useCallback((acceptedFiles: File[]) => {
     if (acceptedFiles && acceptedFiles.length > 0) {

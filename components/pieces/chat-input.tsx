@@ -1,14 +1,13 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { ArrowUp, Paperclip, X, File } from "lucide-react";
+import { ArrowUp, X, File } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Textarea } from "@/components/ui/textarea";
 import { useChatMutation } from "@/hooks/useChatMutation";
 import { useDashboard } from "@/contexts/DashboardContext";
 import useCreateChatMutation from "@/hooks/useCreateChatMutation";
-import { Descriptor } from "@/models/api";
 
 export function ChatInput({ width = "100%" }) {
   const [inputValue, setInputValue] = useState("");
@@ -16,7 +15,7 @@ export function ChatInput({ width = "100%" }) {
   const createChatMutation = useCreateChatMutation();
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
-  const { chatId, fileId, activeFiles, setActiveFiles, setHighlightFiles } = useDashboard();
+  const { chatId, activeFiles, setActiveFiles, setHighlightFiles } = useDashboard();
 
   const handleHighlightFiles = () => {
     setHighlightFiles(true);
