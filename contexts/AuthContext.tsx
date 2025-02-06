@@ -20,11 +20,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     checkAuthStatus();
   }, []);
-  
 
   const checkAuthStatus = async () => {
     try {
-      await apiClient.get("/api/auth/verify");
+      await apiClient.get("/auth/verify");
       setIsAuthenticated(true);
     } catch (error) {
       setIsAuthenticated(false);
@@ -34,17 +33,17 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const login = async (email: string, password: string) => {
-    await apiClient.post("/api/auth/login", { email, password });
+    await apiClient.post("/auth/login", { email, password });
     setIsAuthenticated(true);
   };
 
   const signup = async (name: string, email: string, password: string) => {
-    await apiClient.post("/api/auth/signup", { name,email, password });
+    await apiClient.post("/auth/signup", { name, email, password });
     setIsAuthenticated(true);
   };
 
   const logout = async () => {
-    await apiClient.post("/api/auth/logout");
+    await apiClient.post("/auth/logout");
     setIsAuthenticated(false);
   };
 
@@ -54,7 +53,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     </AuthContext.Provider>
   );
 };
-
 
 export const useAuth = () => {
   const context = useContext(AuthContext);
