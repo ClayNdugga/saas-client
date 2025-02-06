@@ -32,9 +32,7 @@ export function NavMain() {
   const {
     chats,
     files,
-    chatId,
     setChatId,
-    fileId,
     setFileId,
     setReference,
     setIsPdfLoaded,

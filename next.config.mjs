@@ -4,36 +4,36 @@ const nextConfig = {
     return [
       {
         source: "/api/login",
-        destination: "http://localhost:8080/login",
+        destination: "https://prod-backend-service-666458574194.us-central1.run.app:8080/login",
       },
       {
         source: "/api/sign-up",
-        destination: "http://localhost:8080/sign-up",
+        destination: "https://prod-backend-service-666458574194.us-central1.run.app:8080/sign-up",
       },
       {
         source: "/api/create-checkout-session",
-        destination: "http://localhost:8080/create-checkout-session",
+        destination: "https://prod-backend-service-666458574194.us-central1.run.app:8080/create-checkout-session",
       },
       {
         source: "/api/upload",
-        destination: "http://localhost:8080/upload",
+        destination: "https://prod-backend-service-666458574194.us-central1.run.app:8080/upload",
       },
       //begin new
       {
         source: "/api/files/:path*",
-        destination: "http://localhost:8080/files/:path*",
+        destination: "https://prod-backend-service-666458574194.us-central1.run.app:8080/files/:path*",
       },
       {
         source: "/api/users/:path*",
-        destination: "http://localhost:8080/users/:path*",
+        destination: "https://prod-backend-service-666458574194.us-central1.run.app:8080/users/:path*",
       },
       {
         source: "/api/chats/:path*",
-        destination: "http://localhost:8080/chats/:path*",
+        destination: "https://prod-backend-service-666458574194.us-central1.run.app:8080/chats/:path*",
       },
       {
         source: "/api/auth/:path*",
-        destination: "http://localhost:8080/auth/:path*",
+        destination: "https://prod-backend-service-666458574194.us-central1.run.app:8080/auth/:path*",
       },
     ];
   },

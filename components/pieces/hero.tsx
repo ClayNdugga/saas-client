@@ -1,6 +1,5 @@
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import Header from "@/components/pieces/header";
 
 import { useRouter } from "next/navigation";
 
@@ -14,9 +13,9 @@ export default function Hero() {
           <div className="max-w-xl">
             <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl">Welcome to Our Website</h1>
             <p className="mt-6 text-xl text-muted-foreground">
-              Discover amazing features and services that will transform your experience. We're here to help you achieve
+              Discover amazing features and services that will transform your experience. Were here to help you achieve
               your goals and reach new heights.
-            </p>
+              </p>
             <div className="mt-10 flex flex-wrap gap-4">
               <Button size="lg" onClick={() => router.push("/login")}>
                 Login

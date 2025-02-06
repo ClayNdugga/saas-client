@@ -61,7 +61,7 @@ export const Message: React.FC<MessageProps> = ({ role, content, references }) =
           rehypePlugins={[rehypeKatex]}
           className={`prose ${isUser ? "prose-sm" : "prose-base"} max-w-none dark:prose-invert`}
           components={{
-            code({ node, className, children, ...props }) {
+            code({ className, children, ...props }) {
             // code({ node, inline, className, children, ...props }) {
               const match = /language-(\w+)/.exec(className || "");
               return match ? (

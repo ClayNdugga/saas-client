@@ -1,11 +1,11 @@
 import { useDashboard } from "@/contexts/DashboardContext";
 import { ApiResponse } from "@/models/api";
-import { Viewer, SpecialZoomLevel, ProgressBar, Worker } from "@react-pdf-viewer/core";
+import { Viewer, SpecialZoomLevel, Worker } from "@react-pdf-viewer/core";
 import { defaultLayoutPlugin } from "@react-pdf-viewer/default-layout";
-import { pageNavigationPlugin, RenderCurrentPageLabelProps } from "@react-pdf-viewer/page-navigation";
+import { pageNavigationPlugin } from "@react-pdf-viewer/page-navigation";
 
 import { highlightPlugin, Trigger } from "@react-pdf-viewer/highlight";
-import type { HighlightArea, RenderHighlightsProps } from "@react-pdf-viewer/highlight";
+import type { RenderHighlightsProps } from "@react-pdf-viewer/highlight";
 // import {jumpToPage} from '@react-pdf-viewer/page-navigation';
 
 import React, { useEffect, useRef, useState } from "react";
@@ -15,11 +15,11 @@ interface Props {
 }
 
 const PDFViewer = ({ fileData }: Props) => {
-  const defaultLayoutPluginInstance = defaultLayoutPlugin({
-    sidebarTabs: (defaultTabs) => [
-      defaultTabs[0], // Thumbnails tab
-    ],
-  });
+  // const defaultLayoutPluginInstance = defaultLayoutPlugin({
+  //   sidebarTabs: (defaultTabs) => [
+  //     defaultTabs[0], // Thumbnails tab
+  //   ],
+  // });
 
   const pageNavigationPluginInstance = pageNavigationPlugin();
   // const { jumpToPage } = pageNavigationPluginInstance;
