@@ -22,7 +22,7 @@ import { defaultLayoutPlugin } from "@react-pdf-viewer/default-layout";
 import PDFViewer from "./pdf-viewer";
 import { Loader2 } from "lucide-react";
 
-import { Camera, Figma, FileText, FormInput, Calculator } from "lucide-react";
+import { FileText } from "lucide-react";
 
 export default function Dashboard() {
   const defaultLayoutPluginInstance = defaultLayoutPlugin({
@@ -60,7 +60,7 @@ export default function Dashboard() {
       <SidebarInset className="overflow-hidden">
         <div className=" flex flex-col h-screen overflow-hidden">
           <div className="flex flex-1 overflow-hidden">
-            {!fileId && (!chatId || isChatting) ? (
+            {!fileId && !chatId && !isChatting ? (
               <div className="flex flex-col items-center justify-center h-full w-full">
                 <h1 className="text-4xl font-bold pb-10">Chat with any PDF</h1>
                 <ChatInput width="50%" />

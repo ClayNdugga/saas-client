@@ -10,7 +10,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Separator } from "@/components/ui/separator";
 import Header from "@/components/pieces/header";
 
-import { useAuthState } from "react-firebase-hooks/auth";
+// import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "@/firebase/config";
 import { useRouter } from "next/navigation";
 import axios from "axios";
@@ -18,33 +18,33 @@ import axios from "axios";
 const Pricing4 = () => {
   const [isAnnually, setIsAnnually] = useState(false);
 
-  const [user] = useAuthState(auth);
+  // const [user] = useAuthState(auth);
   const router = useRouter();
 
   async function handlePurchase(tier: string) {
-    console.log("Purchase from pricing...")
-    console.log(user)
+    // console.log("Purchase from pricing...")
+    // console.log(user)
     
-    if (!user) {
-      router.push("/login");
-    }
-    if (tier == "Free") {
-      router.push("dashboard");
-    }
+    // if (!user) {
+    //   router.push("/login");
+    // }
+    // if (tier == "Free") {
+    //   router.push("dashboard");
+    // }
     
   
-    const response = await axios.post("/api/create-checkout-session", {user: user, tier: tier});
-    console.log(response)
-    window.location.href = response.data.url; 
+    // const response = await axios.post("/api/create-checkout-session", {user: user, tier: tier});
+    // console.log(response)
+    // window.location.href = response.data.url; 
 
-    // console.log('Login successful:', response.data);
-    // // router.push(response)
-    // router.push("/dashboard")
+    // // console.log('Login successful:', response.data);
+    // // // router.push(response)
+    // // router.push("/dashboard")
 
     
 
-    console.log(user);
-    console.log(`Tier Purchased: ${tier}`);
+    // console.log(user);
+    // console.log(`Tier Purchased: ${tier}`);
   }
 
   return (

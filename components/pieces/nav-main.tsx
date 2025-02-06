@@ -1,6 +1,6 @@
 "use client";
 
-import { type LucideIcon, MessageSquareText, File, Plus, MoreHorizontal, Pencil, Trash2 } from "lucide-react";
+import { MessageSquareText, File, Plus, MoreHorizontal, Pencil, Trash2 } from "lucide-react";
 
 import {
   SidebarGroup,
@@ -20,11 +20,9 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
-import apiClient from "@/services/api-client";
 import { FileUploadArea } from "./file-upload-area";
 import { useDeleteChatMuation } from "@/hooks/useChatDeleteMutation";
 import { useDeleteFileMuation } from "@/hooks/useFileDeleteMutation";
-import { FirebaseFile } from "@/models/firebase";
 import { Descriptor } from "@/models/api";
 import { useState } from "react";
 import { useRenameFileMuation } from "@/hooks/useFileRenameMutation";

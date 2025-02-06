@@ -17,7 +17,6 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/co
 
 import { useAuth } from "@/contexts/AuthContext";
 import { useRouter } from "next/navigation";
-import apiClient from "@/services/api-client";
 
 
 const subMenuItemsOne = [

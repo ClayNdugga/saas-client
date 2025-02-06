@@ -4,36 +4,36 @@ const nextConfig = {
     return [
       {
         source: "/api/login",
-        destination: "http://localhost:5000/login",
+        destination: "http://localhost:8080/login",
       },
       {
         source: "/api/sign-up",
-        destination: "http://localhost:5000/sign-up",
+        destination: "http://localhost:8080/sign-up",
       },
       {
         source: "/api/create-checkout-session",
-        destination: "http://localhost:5000/create-checkout-session",
+        destination: "http://localhost:8080/create-checkout-session",
       },
       {
         source: "/api/upload",
-        destination: "http://localhost:5000/upload",
+        destination: "http://localhost:8080/upload",
       },
-      //begin new 
+      //begin new
       {
-        source: "/api/files/:path*",  
-        destination: "http://localhost:5000/files/:path*",  
-      },
-      {
-        source: "/api/users/:path*",  
-        destination: "http://localhost:5000/users/:path*",  
+        source: "/api/files/:path*",
+        destination: "http://localhost:8080/files/:path*",
       },
       {
-        source: "/api/chats/:path*",  
-        destination: "http://localhost:5000/chats/:path*",  
+        source: "/api/users/:path*",
+        destination: "http://localhost:8080/users/:path*",
       },
       {
-        source: "/api/auth/:path*",  
-        destination: "http://localhost:5000/auth/:path*",  
+        source: "/api/chats/:path*",
+        destination: "http://localhost:8080/chats/:path*",
+      },
+      {
+        source: "/api/auth/:path*",
+        destination: "http://localhost:8080/auth/:path*",
       },
     ];
   },

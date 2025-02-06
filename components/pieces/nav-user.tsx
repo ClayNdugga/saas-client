@@ -1,12 +1,11 @@
 "use client";
 
-import { BadgeCheck, Bell, ChevronsUpDown, CreditCard, LogOut, Sparkles } from "lucide-react";
+import { ChevronsUpDown, LogOut } from "lucide-react";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
@@ -14,13 +13,9 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar } from "@/components/ui/sidebar";
 
-import { useAuthState, useSignOut } from "react-firebase-hooks/auth";
-import { auth } from "@/firebase/config";
 import { useRouter } from "next/navigation";
-// import { signOut } from "firebase/auth";
 import { FirebaseUser } from "@/models/firebase";
 import { useDashboard } from "@/contexts/DashboardContext";
-import apiClient from "@/services/api-client";
 import { useAuth } from "@/contexts/AuthContext";
 
 interface NavUserProps {

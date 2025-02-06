@@ -72,6 +72,8 @@ const useCreateChatMutation = () => {
     },
     onError: (error) => {
       refetchChats()
+      setIsChatting(false);
+
     },
 
   });
