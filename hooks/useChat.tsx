@@ -9,7 +9,7 @@ const useChat = (chatId: string) =>
     queryKey: ["Chats", chatId],
     queryFn: async () => {
       // apiClient.initializeTokenFromSession(); 
-      return apiClient.get(`/api/chats/${chatId}`);
+      return apiClient.get(`/chats/${chatId}`);
     },
   });
 

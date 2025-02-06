@@ -5,7 +5,7 @@ import apiClient from "@/services/api-client";
 import { useMutation } from "@tanstack/react-query";
 
 const mutateChat = (chatId: string) =>
-    apiClient.delete<ApiResponse<{ responseMessage: Message }>>(`/api/chats/${chatId}`);
+    apiClient.delete<ApiResponse<{ responseMessage: Message }>>(`/chats/${chatId}`);
   
   export const useDeleteChatMuation = () => {
     // Grab setChat from context

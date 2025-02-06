@@ -9,7 +9,7 @@ const useFile = (fileName: string) =>
   useQuery<ApiResponse<{signedUrl: string}>>({
     queryKey: ["Files", fileName],
     queryFn: async () => {    
-      return apiClient.get(`/api/files/${fileName}`);
+      return apiClient.get(`/files/${fileName}`);
     },
     enabled: !!fileName,
     staleTime: 1000 * 60 * 10, 

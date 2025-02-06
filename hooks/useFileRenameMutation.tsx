@@ -5,7 +5,7 @@ import apiClient from "@/services/api-client";
 import { useMutation } from "@tanstack/react-query";
 
 const mutateFile = (fileId: string, newName: string) =>
-  apiClient.patch<ApiResponse<{}>>(`/api/files/${fileId}`, { newName: newName });
+  apiClient.patch<ApiResponse<{}>>(`/files/${fileId}`, { newName: newName });
 
 export const useRenameFileMuation = () => {
   const { files, setFiles, refetchFiles } = useDashboard();

@@ -5,7 +5,7 @@ import apiClient from "@/services/api-client";
 import { useMutation } from "@tanstack/react-query";
 
 const mutateChat = (query: string, fileIds: string[]) =>
-  apiClient.post<ApiResponse<{ responseMessage: Message; chatId: string; references: Citation[] }>>("/api/chats", {
+  apiClient.post<ApiResponse<{ responseMessage: Message; chatId: string; references: Citation[] }>>("/chats", {
     query,
     fileIds,
   });

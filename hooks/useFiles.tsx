@@ -9,7 +9,7 @@ const useFiles = () =>
   useQuery<ApiResponse<{ files: Descriptor[] }>>({
     queryKey: ["Files"],
     queryFn: async () => {
-      return apiClient.get("/api/files");
+      return apiClient.get("/files");
     },
   });
 

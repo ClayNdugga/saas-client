@@ -5,7 +5,7 @@ import apiClient from "@/services/api-client";
 import { useMutation } from "@tanstack/react-query";
 
 
-const mutateFile = (fileId: string) => apiClient.delete<ApiResponse<{ responseMessage: Message }>>(`/api/files/${fileId}`);
+const mutateFile = (fileId: string) => apiClient.delete<ApiResponse<{ responseMessage: Message }>>(`/files/${fileId}`);
 
 export const useDeleteFileMuation = () => {
   // Grab setChat from context

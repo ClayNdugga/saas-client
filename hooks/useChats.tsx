@@ -7,7 +7,7 @@ const useChats = () =>
   useQuery<ApiResponse<{ chats: Descriptor[] }>>({
     queryKey: ["Chats"],
     queryFn: async () => {
-      return apiClient.get("/api/chats");
+      return apiClient.get("/chats");
     },
   });
 

@@ -5,7 +5,7 @@ import apiClient from "@/services/api-client";
 import { useMutation } from "@tanstack/react-query";
 
 const mutateChat = (chatId: string, newName: string) =>
-  apiClient.patch<ApiResponse<{}>>(`/api/chats/${chatId}`, { newName: newName });
+  apiClient.patch<ApiResponse<{}>>(`/chats/${chatId}`, { newName: newName });
 
 export const useRenameChatMuation = () => {
   const { chats, setChats, refetchChats } = useDashboard();

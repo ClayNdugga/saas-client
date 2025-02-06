@@ -75,7 +75,7 @@ class APIClient {
   }
 }
 
-const apiClient = new APIClient("https://prod-backend-service-666458574194.us-central1.run.app:8080");
+const apiClient = new APIClient("https://prod-backend-service-666458574194.us-central1.run.app");
 // apiClient.initializeTokenFromSession();
 
 export default apiClient;

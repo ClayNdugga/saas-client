@@ -8,7 +8,7 @@ const useUser = () =>
   useQuery<ApiResponse<{ userData: FirebaseDBUser}>>({
     queryKey: ["User"],
     queryFn: async () => {
-      return apiClient.get("/api/users");
+      return apiClient.get("/users");
     },
   });
 
