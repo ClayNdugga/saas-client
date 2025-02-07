@@ -7,16 +7,12 @@ import { Button } from "@/components/ui/button";
 import apiClient from "@/services/api-client";
 import { useDashboard } from "@/contexts/DashboardContext";
 
-
-
 export function FileUploadArea() {
   // export function FileUploadArea({ onFileUpload }: FileUploadAreaProps) {
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-
-  const {refetchFiles} = useDashboard()
-
+  const { refetchFiles } = useDashboard();
 
   const onDrop = useCallback((acceptedFiles: File[]) => {
     if (acceptedFiles && acceptedFiles.length > 0) {
@@ -38,12 +34,12 @@ export function FileUploadArea() {
     console.log(uploadedFile);
 
     try {
-      const uploadRes = await apiClient.post("/api/files", formData);
+      const uploadRes = await apiClient.post("/files", formData);
       // const uploadRes = await axios.post("/api/upload", formData);
 
       console.log("Uploaded successfully", uploadRes);
-      setUploadedFile(null)
-      refetchFiles()
+      setUploadedFile(null);
+      refetchFiles();
     } catch (error) {
       console.error("Upload failed:", error);
     } finally {

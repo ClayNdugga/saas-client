@@ -75,6 +75,7 @@ class APIClient {
   }
 }
 
+// const apiClient = new APIClient("");
 const apiClient = new APIClient("https://prod-backend-service-666458574194.us-central1.run.app");
 // apiClient.initializeTokenFromSession();
 
