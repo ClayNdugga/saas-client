@@ -12,7 +12,8 @@ import {
   SidebarTrigger,
   useSidebar,
 } from "@/components/ui/sidebar";
-import Image from "next/image";
+// import Image from "next/image";
+import { MessageCircleMoreIcon } from "lucide-react";
 
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
@@ -22,7 +23,9 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
         <div className="flex flex-row justify-between items-center">
-          {open && <Image src="/logo.jpg" alt="Logo" width={32} height={32} />}
+          {/* {open && <Image src="/logo.jpg" alt="Logo" width={32} height={32} />} */}
+          {open && <MessageCircleMoreIcon className="h-8 w-8" />
+          }
           <SidebarTrigger />
         </div>
       </SidebarHeader>

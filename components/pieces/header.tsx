@@ -1,22 +1,18 @@
-import { Book, Menu, Sunset, Trees, Zap } from "lucide-react";
+import { Book, Menu, Sunset, Trees, Zap, MessageCircleMoreIcon } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Button, buttonVariants } from "@/components/ui/button";
 import {
-  NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  NavigationMenuTrigger,
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 
 import { useAuth } from "@/contexts/AuthContext";
 import { useRouter } from "next/navigation";
+
+
 
 
 const subMenuItemsOne = [
@@ -80,8 +76,9 @@ const Header = () => {
         <nav className="hidden justify-between lg:flex">
           <div className="flex items-center gap-6">
             <div className="flex items-center gap-2">
-              <img src="https://shadcnblocks.com/images/block/block-1.svg" className="w-8" alt="logo" />
-              <span className="text-xl font-bold">Shadcn Blocks</span>
+              {/* <img src="https://shadcnblocks.com/images/block/block-1.svg" className="w-8" alt="logo" /> */}
+              <MessageCircleMoreIcon className="h-8 w-8" />
+              <span className="text-xl font-bold">PDF Chat</span>
             </div>
             <div className="flex items-center">
               <a
@@ -96,7 +93,7 @@ const Header = () => {
               >
                 Home
               </a>
-              <NavigationMenu>
+              {/* <NavigationMenu>
                 <NavigationMenuList>
                   <NavigationMenuItem className="text-muted-foreground">
                     <NavigationMenuTrigger>
@@ -151,9 +148,9 @@ const Header = () => {
                     </NavigationMenuContent>
                   </NavigationMenuItem>
                 </NavigationMenuList>
-              </NavigationMenu>
+              </NavigationMenu> */}
 
-              <a
+              {/* <a
                 className={cn(
                   "text-muted-foreground",
                   navigationMenuTriggerStyle,
@@ -176,7 +173,7 @@ const Header = () => {
                 href="#"
               >
                 Blog
-              </a>
+              </a> */}
             </div>
           </div>
           <div className="flex gap-2">
@@ -222,7 +219,7 @@ const Header = () => {
                   <a href="#" className="font-semibold">
                     Home
                   </a>
-                  <Accordion type="single" collapsible className="w-full">
+                  {/* <Accordion type="single" collapsible className="w-full">
                     <AccordionItem value="products" className="border-b-0">
                       <AccordionTrigger className="mb-4 py-0 font-semibold hover:no-underline">
                         Products
@@ -265,16 +262,20 @@ const Header = () => {
                         ))}
                       </AccordionContent>
                     </AccordionItem>
-                  </Accordion>
-                  <a href="/pricing" className="font-semibold">
+                  </Accordion> */}
+
+                  {/* <a href="/pricing" className="font-semibold">
                     Pricing
                   </a>
                   <a href="#" className="font-semibold">
                     Blog
-                  </a>
+                  </a> */}
+
                 </div>
+
+
                 <div className="border-t pt-4">
-                  <div className="grid grid-cols-2 justify-start">
+                  {/*  <div className="grid grid-cols-2 justify-start">
                     <a
                       className={cn(
                         buttonVariants({
@@ -341,7 +342,7 @@ const Header = () => {
                     >
                       Cookie Settings
                     </a>
-                  </div>
+                  </div> */}
                   <div className="mt-2 flex flex-col gap-3">
                     {isAuthenticated ? (
                       <>
