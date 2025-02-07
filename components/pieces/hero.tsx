@@ -8,7 +8,7 @@ export default function Hero() {
 
   return (
     <section className="bg-background text-foreground flex items-center justify-center flex-1">
-    <div className="container mx-auto px-4 py-24 sm:px-6 sm:py-32 lg:px-8 lg:py-40">
+    <div className="container mx-auto px-4 py-4 sm:px-6 sm:py-6 lg:px-8 lg:py-8">
       <div className="grid grid-cols-1 gap-12 lg:grid-cols-[1fr_3fr] lg:gap-16 items-center">
         {/* Text Section (25%) */}
         <div className="max-w-xl">
@@ -25,14 +25,23 @@ export default function Hero() {
   
         {/* Image Section (75%) */}
         <div className="relative h-80 sm:h-96 lg:h-full w-full">
-          <Image
-            src="/heross2.png"
+          {/* <Image
+            src="/heross3.png"
             alt="Hero image"
             layout="fill"
             objectFit="cover"
             priority
             className="rounded-lg transition-transform duration-300 ease-in-out hover:scale-105"
-          />
+          /> */}
+          <Image
+  src="/heross3.png"
+  alt="Hero image"
+  layout="intrinsic"
+  width={1200}
+  height={800} 
+  priority
+  className="rounded-lg transition-transform duration-300 ease-in-out hover:scale-105"
+/>
         </div>
       </div>
     </div>
