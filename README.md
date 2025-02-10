@@ -2,8 +2,15 @@
     <img src="https://github.com/ClayNdugga/saas-client/blob/main/public/demogrid.png" alt="Screenshot Grid of App Pages" style="max-width:80%;"/> 
 </div> 
 <div align="center" style="margin-top: 1rem; margin-bottom: 1rem;">  
-    <div style="position: relative; padding-bottom: 56.25%; height: 0;"><iframe style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;" src="https://www.tella.tv/video/cm6zgj2fy002r0hla2s2qenqw/embed?b=0&title=0&a=0&loop=0&t=0&muted=0&wt=0" allowfullscreen allowtransparency></iframe></div>
+    <div style="position: relative; padding-bottom: 56.25%; height: 0;"><iframe style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;" src="https://www.tella.tv/video/cm6zgj2fy002r0hla2s2qenqw/embed?b=0&title=0&a=0&loop=0&t=0&muted=0&wt=0" allowfullscreen allowtransparency></iframe>
+    </div>
  </div>
+
+
+<div align="center">
+  <iframe width="560" height="315" src="https://www.youtube.com/embed/34jW2MBME0Q" frameborder="0" allowfullscreen></iframe>
+</div>
+
 
 # Overview
 
@@ -34,16 +41,10 @@ This application allows users to chat with their PDF documents and provides clic
 
 <div align="center" style="margin-top: 1rem; margin-bottom: 1rem;">
     <img src="https://github.com/ClayNdugga/saas-client/blob/main/public/RAG Architecture.png" alt="Application Architecture" style="max-width:80%;"/> 
-</div> 
+</div>
 
 - **Frontend:** Next.js, React, TypeScript
 - **Backend:** Node.js, Express, TypeScript, Docker
 - **Cloud Infrastructure:** Google Cloud Platform (Cloud Run, Cloud Storage), Firebase (Authentication, NoSQL databse, Serverless functions)
 - **Vector Database:** Pinecone
 - **Embeddings & LLM:** OpenAI
-
-# Architecture
-
-- screen record video
-- finish read me
-- send to kadenwook, and greenburg
