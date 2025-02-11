@@ -18,6 +18,7 @@ This application allows users to chat with their PDF documents and provides clic
 - **Frontend:** A Next.js application using React and TypeScript.
 - **Backend:** A Node.js Express API written in TypeScript, containerized with Docker, and deployed on Google Cloud Platform (GCP) Cloud Run.
 
+Try the application [here](https://saas-client-indol.vercel.app/)
 # Workflow
 
 ## PDF Upload Process
