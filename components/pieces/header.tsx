@@ -5,16 +5,11 @@ import { cn } from "@/lib/utils";
 
 // import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Button, buttonVariants } from "@/components/ui/button";
-import {
-  navigationMenuTriggerStyle,
-} from "@/components/ui/navigation-menu";
+import { navigationMenuTriggerStyle } from "@/components/ui/navigation-menu";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 
 import { useAuth } from "@/contexts/AuthContext";
 import { useRouter } from "next/navigation";
-
-
-
 
 // const subMenuItemsOne = [
 //   {
@@ -211,8 +206,8 @@ const Header = () => {
                 <SheetHeader>
                   <SheetTitle>
                     <div className="flex items-center gap-2">
-                      <img src="https://shadcnblocks.com/images/block/block-1.svg" className="w-8" alt="logo" />
-                      <span className="text-xl font-bold">Shadcn Blocks</span>
+                      <MessageCircleMoreIcon className="h-8 w-8" />
+                      <span className="text-xl font-bold">PDF Chat</span>
                     </div>
                   </SheetTitle>
                 </SheetHeader>
@@ -271,9 +266,7 @@ const Header = () => {
                   <a href="#" className="font-semibold">
                     Blog
                   </a> */}
-
                 </div>
-
 
                 <div className="border-t pt-4">
                   {/*  <div className="grid grid-cols-2 justify-start">

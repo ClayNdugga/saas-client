@@ -8,7 +8,7 @@
 
  https://firebasestorage.googleapis.com/v0/b/corded-essence-447119-e4.firebasestorage.app/o/ragdemo.mp4?alt=media&token=bfc1c939-4276-4aa7-b2c9-f37f5a91aecb
 
-
+SideDev’s video 🚄
 
 # Overview
 
@@ -43,6 +43,6 @@ This application allows users to chat with their PDF documents and provides clic
 
 - **Frontend:** Next.js, React, TypeScript
 - **Backend:** Node.js, Express, TypeScript, Docker
-- **Cloud Infrastructure:** Google Cloud Platform (Cloud Run, Cloud Storage), Firebase (Authentication, NoSQL databse, Serverless functions)
+- **Cloud Infrastructure:** Google Cloud Platform (Cloud Run, Cloud Storage), Firebase (Authentication, NoSQL database, Serverless functions)
 - **Vector Database:** Pinecone
 - **Embeddings & LLM:** OpenAI
