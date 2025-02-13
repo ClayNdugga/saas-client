@@ -6,7 +6,8 @@
     </div>
  </div> -->
 
- https://firebasestorage.googleapis.com/v0/b/corded-essence-447119-e4.firebasestorage.app/o/ragdemo.mp4?alt=media&token=bfc1c939-4276-4aa7-b2c9-f37f5a91aecb
+https://github.com/user-attachments/assets/51cd16cf-db5e-46e8-a7cf-d296cefc3d57
+
 
 SideDev’s video 🚄
 
@@ -17,6 +18,7 @@ This application allows users to chat with their PDF documents and provides clic
 - **Frontend:** A Next.js application using React and TypeScript.
 - **Backend:** A Node.js Express API written in TypeScript, containerized with Docker, and deployed on Google Cloud Platform (GCP) Cloud Run.
 
+Try the application [here](https://saas-client-indol.vercel.app/)
 # Workflow
 
 ## PDF Upload Process
