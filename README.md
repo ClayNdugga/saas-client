@@ -9,7 +9,6 @@
 https://github.com/user-attachments/assets/51cd16cf-db5e-46e8-a7cf-d296cefc3d57
 
 
-SideDev’s video 🚄
 
 # Overview
 
